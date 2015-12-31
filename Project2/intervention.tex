@@ -1,0 +1,63 @@
+\documentclass{amsart}
+\usepackage{amssymb}
+\begin{document}
+\title{P2: Building an Intervention System}
+\author{Andy Perez}
+\maketitle
+\section{Classification vs Regression}
+This is a classification problem since we are identifying what categories our students belong to.  They are either at risk to fail, in which case they need assistance, or they are not at risk to fail, in which case they do not need assistance.  Although internal to the project there may exist an algorithm that assigns a numerical value related to the likelihood of a student failing, the aim of the project, ultimately, is to spit out whether a student needs or does not need help in order to graduate.
+
+\section{Exploring the Data}
+Can you find out the following facts about the dataset?
+\begin{list}{$\bullet$}{\addtolength{\parsep}{1mm}}
+	\item Total number of students 
+	
+	395
+	\item Number of students who passed 
+	
+	265
+	\item Number of students who failed
+
+	130
+
+	\item Graduation rate of the class (\%) 
+
+	67.09\%
+	\item Number of features (excluding the label/target column)
+ 
+	30 (the last feature in student\textunderscore data is whether the student passed, the label column)
+\end{list}
+\section{Preparing the Data}
+
+Execute the following steps to prepare the data for modeling, training, and testing:
+
+\begin{list}{$\checkmark$}{\addtolength{\parsep}{1mm}}
+	\item Identify feature and target columns
+
+	\item Preprocess feature colums
+
+	\item Split data into training and test sets
+\end{list}
+
+\section{Training and Evaluating Models}
+\subsection{AdaBoost}
+\begin{list}{$\bullet$}{\addtolength{\parsep}{1mm}}
+	\item What are the general applications of this model?  What are its strengths and weaknesses?
+	\item Given what you know about the data so far, why did you choose this model to apply?
+	\item Time consumption and F1 score table
+\end{list}
+\subsection{Bagging (with decision trees)}
+\begin{list}{$\bullet$}{\addtolength{\parsep}{1mm}}
+	\item What are the general applications of this model?  What are its strengths and weaknesses?
+	\item Given what you know about the data so far, why did you choose this model to apply?
+	\item Time consumption and F1 score table
+\end{list}
+
+\subsection{Naive Bayes}
+\begin{list}{$\bullet$}{\addtolength{\parsep}{1mm}}
+	\item What are the general applications of this model?  What are its strengths and weaknesses?
+	\item Given what you know about the data so far, why did you choose this model to apply?
+	\item Time consumption and F1 score table
+\end{list}
+
+\end{document}
