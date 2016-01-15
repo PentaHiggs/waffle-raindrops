@@ -1,7 +1,7 @@
 # pdfLaTeX auxiliary files
 *.aux
 *.log
-*.syntex.gz
+*.synctex.gz
 
 # compiled python files
 *.pyc
