@@ -43,21 +43,89 @@ Execute the following steps to prepare the data for modeling, training, and test
 \subsection{AdaBoost}
 \begin{list}{$\bullet$}{\addtolength{\parsep}{1mm}}
 	\item What are the general applications of this model?  What are its strengths and weaknesses?
+
+	AdaBoost is a very versatile, general-purpose model that can be adapted for both classification and regression.  In our case we use it with small decision trees, so it inherits
+	the advantages of trees.   These advantages include invariance under strictly monotone transformations of the input variables and robustness against irrelevant
+	input variables.  In addition, AdaBoost is, unlike the decision trees it uses as weak learners, generally not prone to overfitting; it generalizes well.
+	However, it can give bad results in the presesence of noise, and can sometimes be sensitive to outliers, since the algorithm focuses on difficult instances.  
+	In general, it's rarely a bad idea to try out AdaBoost with a proper choice of weak learner.
+
 	\item Given what you know about the data so far, why did you choose this model to apply?
+	
+	AdaBoost's outlier problem is mitigated since we are doing classification involving two common categories.  As said earlier, it's generally a pretty safe model to use, especially
+	since we're using small decision trees as our weak learners.  I know there will be many variables that have almost no final effect on whether a student graduates ( we aren't
+	given an optimized list of things that we know are really important), so having our model do feature selection by itself is quite handy.  There's a grand total of 30 features,
+	so the model selecting the important ones is, well, important.  The inputs are also mixed; some being continuous and others being categorigical.  Trees handle this type of
+	data well, and boosting lets us escape the problems with variance and overfitting.
+
 	\item Time consumption and F1 score table
+
+		\begin{table}[htbp]
+		\begin{center}
+		\begin{tabular}{| l | l | l | l |} \hline
+			& \multicolumn{3}{| c | }{Training set size} \\ \cline{2-4}
+							& 100	& 200	& 300 \\ \hline
+			Training time (secs) 		&0.087	&0.088	&0.098	\\ \hline
+			Prediction time (secs)	&0.005	&0.008	&0.008	\\ \hline
+			F1 score for training set	&0.964	&0.867	&0.848	\\ \hline
+			F1 score for test set	&0.716	&0.785	&0.803	\\ \hline
+		\end{tabular}
+		\end{center}
+		\end{table}
 \end{list}
-\subsection{Bagging (with decision trees)}
+\subsection{Gradient Tree Bosting}
 \begin{list}{$\bullet$}{\addtolength{\parsep}{1mm}}
 	\item What are the general applications of this model?  What are its strengths and weaknesses?
+	
+	As was the case with AdaBoost with trees, this model inhereits the benefits of decision trees, namely the invariance under transformations and irrelevant variables.  As
+	is the case with AdaBoost, it tends go generalize well.  It can be sensitive to noise and outliers, but since we can choose our loss function, in the case of noise we can modify
+	it to reduce issues.  It generally is expected to give more accurate predictions than AdaBoost.  In general, it's a very adaptable model; it has many parameters to play with.
+	It can have a problem with overfitting, but as with many of the other problems this model has, proper choice of parameters can go a long way.
+
 	\item Given what you know about the data so far, why did you choose this model to apply?
+
+	The same reasons given for AdaBoost are applicable here, many of them which are the result of just using any algorithm that boosts on trees.  From what I've read though,
+	this model oftentime preforms better, and there are many parameters I can tweak to adapt it to any features of the data that appear after use.  It may be more computationally
+	intensive, but we can't be sure until we try.
+
 	\item Time consumption and F1 score table
+
+		\begin{table}[htbp]
+		\begin{center}
+		\begin{tabular}{| l | l | l | l |} \hline
+			& \multicolumn{3}{| c | }{Training set size} \\ \cline{2-4}
+							& 100	& 200	& 300 \\ \hline
+			Training time (secs) 		&0.066	&0.101	&0.120	\\ \hline
+			Prediction time (secs)	&0.000	&0.001	&0.001	\\ \hline
+			F1 score for training set	&1.000	&0.992	&0.971	\\ \hline
+			F1 score for test set	&0.786	&0.749	&0.804	\\ \hline
+		\end{tabular}
+		\end{center}
+		\end{table}
 \end{list}
 
-\subsection{Naive Bayes}
+\subsection{Random Forests}
 \begin{list}{$\bullet$}{\addtolength{\parsep}{1mm}}
 	\item What are the general applications of this model?  What are its strengths and weaknesses?
+
+	
+
 	\item Given what you know about the data so far, why did you choose this model to apply?
+
 	\item Time consumption and F1 score table
+
+		\begin{table}[htbp]
+		\begin{center}
+		\begin{tabular}{| l | l | l | l |} \hline
+			& \multicolumn{3}{| c | }{Training set size} \\ \cline{2-4}
+							& 100	& 200	& 300 \\ \hline
+			Training time (secs) 		&0.019	&0.023	&0.021	\\ \hline
+			Prediction time (secs)	&0.001	&0.001	&0.002	\\ \hline
+			F1 score for training set	&0.989	&0.994	&0.955	\\ \hline
+			F1 score for test set	&0.700	&0.759	&0.761	\\ \hline
+		\end{tabular}
+		\end{center}
+		\end{table}
 \end{list}
 
 \end{document}

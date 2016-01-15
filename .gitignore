@@ -1,4 +1,10 @@
+# pdfLaTeX auxiliary files
 *.aux
 *.log
+*.syntex.gz
+
+# compiled python files
 *.pyc
+
+# jupyter inotebook checkpoints
 **/.ipynb_checkpoints/**
