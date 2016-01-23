@@ -5,7 +5,7 @@
 \author{Andy Perez}
 \maketitle
 \section{Classification vs Regression}
-This is a classification problem since we are identifying what categories our students belong to.  They are either at risk to fail, in which case they need assistance, or they are not at risk to fail, in which case they do not need assistance.  Although internal to the project there may exist an algorithm that assigns a numerical value related to the likelihood of a student failing, the aim of the project, ultimately, is to spit out whether a student needs or does not need help in order to graduate.
+This is a classification problem since we are identifying which of two categories our students belong to.  They either graduate, or fail to graduate.  Although internal to the project there may exist an algorithm that assigns a numerical value related to the likelihood of a student failing, the aim of the project, ultimately, is to spit out whether a student needs or does not need help in order to successfully finish high school.
 
 \section{Exploring the Data}
 Can you find out the following facts about the dataset?
@@ -25,7 +25,7 @@ Can you find out the following facts about the dataset?
 	67.09\%
 	\item Number of features (excluding the label/target column)
  
-	30 (the last feature in student\textunderscore data is whether the student passed, the label column)
+	30 
 \end{list}
 \section{Preparing the Data}
 
@@ -52,13 +52,14 @@ Execute the following steps to prepare the data for modeling, training, and test
 
 	\item Given what you know about the data so far, why did you choose this model to apply?
 	
-	AdaBoost's outlier problem is mitigated since we are doing classification involving two common categories.  As said earlier, it's generally a pretty safe model to use, especially
-	since we're using small decision trees as our weak learners.  I know there will be many variables that have almost no final effect on whether a student graduates ( we aren't
+	As said earlier, it's generally a pretty safe model to use, especially
+	since we're using small decision trees as our weak learners.  I know there will be many variables that have almost no final effect on whether a student graduates (we aren't
 	given an optimized list of things that we know are really important), so having our model do feature selection by itself is quite handy.  There's a grand total of 30 features,
 	so the model selecting the important ones is, well, important.  The inputs are also mixed; some being continuous and others being categorigical.  Trees handle this type of
-	data well, and boosting lets us escape the problems with variance and overfitting.
+	data well, and boosting lets us escape the problems with variance and overfitting.  Noise may be an issue, but it's not something I suspect there will be much of, nor something
+	I'm entirely sure how to measure without playing around with the data using some models.
 
-	\item Time consumption and F1 score table
+	\item Time consumption and F1 score table (averaged over four runs)
 
 		\begin{table}[htbp]
 		\begin{center}
@@ -77,18 +78,19 @@ Execute the following steps to prepare the data for modeling, training, and test
 \begin{list}{$\bullet$}{\addtolength{\parsep}{1mm}}
 	\item What are the general applications of this model?  What are its strengths and weaknesses?
 	
-	As was the case with AdaBoost with trees, this model inhereits the benefits of decision trees, namely the invariance under transformations and irrelevant variables.  As
-	is the case with AdaBoost, it tends go generalize well.  It can be sensitive to noise and outliers, but since we can choose our loss function, in the case of noise we can modify
-	it to reduce issues.  It generally is expected to give more accurate predictions than AdaBoost.  In general, it's a very adaptable model; it has many parameters to play with.
-	It can have a problem with overfitting, but as with many of the other problems this model has, proper choice of parameters can go a long way.
+	As was the case with AdaBoost with trees, this model inhereits the benefits of decision trees, namely the invariance under transformations and ability to deal with irrelevant variables.  As
+	is the case with AdaBoost, it tends to generalize well.  It can be sensitive to noise and outliers, but since we can choose our loss function, in the case of noise we can reduce it's	
+	impact through the choice of a robust loss function.  It generally is expected to give more accurate predictions than AdaBoost.  
+	It's a very adaptable model; it has many parameters to play with.
+	It can have a problem with overfitting, but as with many of the other problems this model has, proper choice of parameters can go a long way towards ameliorating it.
 
 	\item Given what you know about the data so far, why did you choose this model to apply?
 
 	The same reasons given for AdaBoost are applicable here, many of them which are the result of just using any algorithm that boosts on trees.  From what I've read though,
-	this model oftentime preforms better, and there are many parameters I can tweak to adapt it to any features of the data that appear after use.  It may be more computationally
+	this model oftentimes performs better, and there are many parameters I can tweak to cater the model to the data.  It may be more computationally
 	intensive, but we can't be sure until we try.
 
-	\item Time consumption and F1 score table
+	\item Time consumption and F1 score table (averaged over four runs)
 
 		\begin{table}[htbp]
 		\begin{center}
@@ -108,11 +110,17 @@ Execute the following steps to prepare the data for modeling, training, and test
 \begin{list}{$\bullet$}{\addtolength{\parsep}{1mm}}
 	\item What are the general applications of this model?  What are its strengths and weaknesses?
 
+	It is yet another ensemble method with trees, so we have the case that it is invariant under strictly monotone transformations and resistant to the existence
+	of irreleveant variables.  The generalization error for the model converges as we run it longer instead of increasing/diverging, hence it does not have an
+	overfitting problem.  It's also resistant to noise in the output variable, moreso than the other models described here.  It's quite fast, but it may have variance problems,
+	and the convergence may be slower than in the other models.
 	
-
 	\item Given what you know about the data so far, why did you choose this model to apply?
 
-	\item Time consumption and F1 score table
+	The reasons described in the section on AdaBoost are appropriate here as well.  This model is more resistant to noise in the output variable, which is an advantage
+	over the other two.  It also may have a speed advantage without sacrificing too much predicative power.
+
+	\item Time consumption and F1 score table (averaged over four runs)
 
 		\begin{table}[htbp]
 		\begin{center}
@@ -126,6 +134,31 @@ Execute the following steps to prepare the data for modeling, training, and test
 		\end{tabular}
 		\end{center}
 		\end{table}
+\end{list}
+\section{Choosing the Best Model}
+
+\begin{list}{}{\addtolength{\parsep}{1mm}}
+\item[$\bullet$] Based on the experiments you performed earlier, in 2-3 paragraphs explain to the board of supervisors what single model you choose as the best model. Which model has the best test F1 score and time efficiency? Which model is generally the most appropriate based on the available data, limited resources, cost, and performance? Please directly compare and contrast the numerical values recored to make your case.
+
+The final model chosen, after much deliberation, to most accurately predict student success was Gradient Tree Boosting.  Out of all the other models considered, it has the least reliance on data size.  F1 score is a measure of predicative ablity (a greater score indicates better predictions), and on just a data set of 100 students, gradient tree boosting (henceforth GTB) outperformed all the other models, with an F1 score of .786 compared to .700 and .716 for the others.
+
+When it came to running time for the models, GTB had the quickest predictions, done in fractions of a second.  As for how long it took to train these models, while the random forests model was quicker to train, it was much less reliable than the other models, reaching an F1 score of only .761.  GTB slows down more notably for larger data sets, but in our case they are not large enough to make the model unappealing.
+
+\item[$\bullet$] In 1-3 paragraphs explain to the board of supervisors in layman's terms how the final model chosen is supposed to work (for example if you choose a decision tree or support vector machine, how does it learn to make a prediction).
+
+Our model is based on a simpler model called a Decision Tree, or DT.  DTs are made by examining the data, and at every stage seeing which split in some input variable that best divides it into to categories, then repeating the process themselves on the new categories created.  For example, in our data, it turns out that whether a child has failed a class or failed one or more classes is the best way to divide the set of students in two by a simple split so that we get two relatively homogenous sets of students.  This isn't surprising, as students who have difficulty passing classes typically have difficulty graduating; and those who are passing all their classes do tend to have little difficulty meeting graduation requirements.  Out of those who do pass all their classes, we can further divide them into those who get extra instruction or not; For those who have failed at least one class we can divide them by those with 1 or less absences and those with more, and so forth, predicting whether a student passes more accurately as we take more factors into consideration. 
+
+The model we are actually using, Gradient Tree Boosting, starts by taking the average proability of a student failing to graduate (.3291or 32.91\% in this case) as it's base model.  In other words, it predicts everyone will pass, because more people pass than fail.  This is obviously not a very useful model; we make this model useful by then finding the small Decision Tree that can be combined with this current model that gets it closest to predicting the correct student outcomes, and reducing the contribution of it by a factor before combining it with the original one.  We keep going on in this fashion, creating a sum of Decision Trees that becomes more and more accurate as more trees are added to the sum, until we arrive at a sufficient final model.
+
+In order to make predictions on a given set of students all that needs to be done is to run their stats through the Decision Trees, and sum them to arrive at a final prediction of whether they're
+expected to pass or fail.
+
+\item[$\checkmark$] Fine-tune the model.  Use gridsearch with at least one important parameter tuned and with at least 3 settings.  Use the entire training set for this.
+
+\item[$\bullet$] What is the model's final F1 score?
+
+The model's final F1 score is 0.823
+
 \end{list}
 
 \end{document}
