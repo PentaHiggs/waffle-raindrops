@@ -8,24 +8,28 @@ class LearningAgent(Agent):
 
     def __init__(self, env):
         super(LearningAgent, self).__init__(env)  # sets self.env = env, state = None, next_waypoint = None, and a default color
+        print "LearningAgent.__init__ run"
         self.color = 'red'  # override color
         self.planner = RoutePlanner(self.env, self)  # simple route planner to get next_waypoint
         # TODO: Initialize any additional variables here
-
+        self.destination = None
+        actions = [None, 'forward', 'left', 'right']
+        
     def reset(self, destination=None):
+        """ Resets the LearningAgent.  Also called after __init__ by the environment on start """
         self.planner.route_to(destination)
-        # TODO: Prepare for a new trip; reset any variables here, if required
+        self.destination = destination
 
     def update(self, t):
         # Gather inputs
         self.next_waypoint = self.planner.next_waypoint()  # from route planner, also displayed by simulator
         inputs = self.env.sense(self)
         deadline = self.env.get_deadline(self)
-
+        
         # TODO: Update state
         
         # TODO: Select action according to your policy
-        action = None
+        action = actions[random.randint(0,3)]
 
         # Execute action and get reward
         reward = self.env.act(self, action)
