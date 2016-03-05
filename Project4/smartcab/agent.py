@@ -13,7 +13,7 @@ class LearningAgent(Agent):
         self.planner = RoutePlanner(self.env, self)  # simple route planner to get next_waypoint
         # TODO: Initialize any additional variables here
         self.destination = None
-        actions = [None, 'forward', 'left', 'right']
+        self.actions = [None, 'forward', 'left', 'right']
         
     def reset(self, destination=None):
         """ Resets the LearningAgent.  Also called after __init__ by the environment on start """
@@ -29,14 +29,14 @@ class LearningAgent(Agent):
         # TODO: Update state
         
         # TODO: Select action according to your policy
-        action = actions[random.randint(0,3)]
+        action = self.actions[random.randint(0,3)]
 
         # Execute action and get reward
         reward = self.env.act(self, action)
 
         # TODO: Learn policy based on state, action, reward
 
-        print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}".format(deadline, inputs, action, reward)  # [debug]
+        print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, waypoint =  {}".format(deadline, inputs, action, reward, self.next_waypoint)  # [debug]
 
 
 def run():
