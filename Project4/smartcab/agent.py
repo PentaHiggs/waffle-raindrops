@@ -2,7 +2,7 @@ import random
 from environment import Agent, Environment
 from planner import RoutePlanner
 from simulator import Simulator
-from python import namedtuple
+from collections import namedtuple
 
 
 class LearningAgent(Agent):
@@ -14,14 +14,12 @@ class LearningAgent(Agent):
         self.color = 'red'  # override color
         self.planner = RoutePlanner(self.env, self)  # simple route planner to get next_waypoint
         
-        # TODO: Initialize any additional variables here
-        
+        # TODO: Initialize any additional variables here    
         self.actions = [None, 'forward', 'left', 'right']
         self.stateTuple = namedtuple('stateTuple', 
                         ['light','oncoming','right','left','next_waypoint','deadline_approaching'])
         self.stateActionTuple = namedtuple('stateActionTuple',
-                        ['state', 'action'])
-                        
+                        ['state', 'action'])                        
         self.Q = {}
         self.s_a = None
         self.reward = None
@@ -36,7 +34,7 @@ class LearningAgent(Agent):
         # Q function learning parameters
         defaultVal = 10.
         epsilon = .1
-        learningRate = 1./t
+        learningRate = 1./(t+1)
         discountFactor = 1./2.
         
         # Gather inputs
@@ -46,21 +44,35 @@ class LearningAgent(Agent):
         deadline = self.env.get_deadline(self)
         
         # TODO: Update state
-        state = stateTuple( 'light'                 = inputs['light'],
-                            'oncoming'              = inputs['oncoming'],
-                            'right'                 = inputs['right'],
-                            'left'                  = inputs['left'],
-                            'next_waypoint'         = self.next_waypoint,
-                            'deadline_approaching'  = (deadline < 5),
-                            )
+        state = self.stateTuple( light                   = inputs['light'],
+                                 oncoming                = inputs['oncoming'],
+                                 right                   = inputs['right'],
+                                 left                    = inputs['left'],
+                                 next_waypoint           = self.next_waypoint,
+                                 deadline_approaching    = (deadline < 5),
+                                )
         
-   
+        # Update Q function
+        qVal = [10. for _ in range(4)]
+        for i, action in enumerate(self.actions):
+            s_a = self.stateActionTuple(state, action)
+            if self.Q.has_key(s_a):
+                qVal[i] = self.Q[s_a]
+            else:
+                self.Q[s_a] = defaultVal
+        maxVal = max(qVal)   
+        optimalAction = self.actions[ random.choice([i for i,j in enumerate(qVal) if j==maxVal]) ]
+        optimal_s_a = self.stateActionTuple(state, optimalAction)
+        if not self.s_a == None: # if this isn't the first time we run update(self, t)
+            self.Q[self.s_a] = (1-learningRate) * self.Q[self.s_a] + \
+                learningRate * (self.reward + discountFactor * (self.Q[optimal_s_a])) 
+                
         # TODO: Select action according to your policy
         action = None
-        
+       
         # Calculate optimal action given current knowledge of Q function
         optimalAction = None
-        qVal = [10., 10., 10., 10.]
+        qVal = [10. for _ in range(4)]
         for i, action in enumerate(self.actions):
             s_a = self.stateActionTuple(state, action)
             if self.Q.has_key(s_a):
@@ -68,7 +80,7 @@ class LearningAgent(Agent):
             else:
                 self.Q[s_a] = defaultVal
         maxVal = max(qVal)
-        optimalAction = self.actions[ random.choice([for i,j in enumerate(qVal) if j==maxVal]) ]
+        optimalAction = self.actions[ random.choice([i for i,j in enumerate(qVal) if j==maxVal]) ]
         
         # Choose whether to act optimally or act randomly
         if random.random() <= epsilon:
@@ -78,13 +90,7 @@ class LearningAgent(Agent):
             
         # Execute action and get reward
         reward = self.env.act(self, action)
-        
-        # Update Q function
-        optimal_s_a = self.stateActionTuple(state, optimalAction)
-        if not self.s_a == None: # if this isn't the first time we run update(self, t)
-            self.Q[s_a] = (1-learningRate) * self.Q[s_a] + \
-                learningRate * (self.reward + discountFactor * (self.Q[optimal_s_a]) 
-                
+         
         # Update the old state variables
         self.s_a = s_a
         self.reward = reward
