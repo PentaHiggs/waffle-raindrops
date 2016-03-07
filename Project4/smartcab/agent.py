@@ -17,7 +17,7 @@ class LearningAgent(Agent):
         # TODO: Initialize any additional variables here    
         self.actions = [None, 'forward', 'left', 'right']
         self.stateTuple = namedtuple('stateTuple', 
-                        ['light','oncoming','right','left','next_waypoint','deadline_approaching'])
+                        ['light','oncoming','right','left','next_waypoint'])
         self.stateActionTuple = namedtuple('stateActionTuple',
                         ['state', 'action'])                        
         self.Q = {}
@@ -32,10 +32,10 @@ class LearningAgent(Agent):
         
     def update(self, t):
         # Q function learning parameters
-        defaultVal = 10.
+        defaultVal = 4.
         epsilon = .1
-        learningRate = 1./(t+1)
-        discountFactor = 1./2.
+        learningRate = 1./(t+1)**(.6)
+        discountFactor = 1/2.
         
         # Gather inputs
         self.next_waypoint = self.planner.next_waypoint()  # from route planner, also displayed by simulator
@@ -49,38 +49,30 @@ class LearningAgent(Agent):
                                  right                   = inputs['right'],
                                  left                    = inputs['left'],
                                  next_waypoint           = self.next_waypoint,
-                                 deadline_approaching    = (deadline < 5),
+                                 #deadline_approaching    = (deadline < 5),
                                 )
         
         # Update Q function
-        qVal = [10. for _ in range(4)]
-        for i, action in enumerate(self.actions):
-            s_a = self.stateActionTuple(state, action)
-            if self.Q.has_key(s_a):
-                qVal[i] = self.Q[s_a]
-            else:
-                self.Q[s_a] = defaultVal
-        maxVal = max(qVal)   
-        optimalAction = self.actions[ random.choice([i for i,j in enumerate(qVal) if j==maxVal]) ]
-        optimal_s_a = self.stateActionTuple(state, optimalAction)
+        def findOptimalAction(state): 
+            qVal = [defaultVal for i in range(4)]
+            for i, action in enumerate(self.actions):
+                s_a = self.stateActionTuple(state, action)
+                if self.Q.has_key(s_a):
+                    qVal[i] = self.Q[s_a]
+                else:
+                    self.Q[s_a] = defaultVal
+            maxVal = max(qVal)
+            #print "Q value of action is {}".format(maxVal)        
+            return self.actions[ random.choice([i for i,j in enumerate(qVal) if j==maxVal]) ]
+        
+        optimal_s_a = self.stateActionTuple(state, findOptimalAction(state))
         if not self.s_a == None: # if this isn't the first time we run update(self, t)
             self.Q[self.s_a] = (1-learningRate) * self.Q[self.s_a] + \
-                learningRate * (self.reward + discountFactor * (self.Q[optimal_s_a])) 
-                
+                learningRate * (self.reward + discountFactor * (self.Q[optimal_s_a]))  
+           
         # TODO: Select action according to your policy
         action = None
-       
-        # Calculate optimal action given current knowledge of Q function
-        optimalAction = None
-        qVal = [10. for _ in range(4)]
-        for i, action in enumerate(self.actions):
-            s_a = self.stateActionTuple(state, action)
-            if self.Q.has_key(s_a):
-                qVal[i] = self.Q[s_a]
-            else:
-                self.Q[s_a] = defaultVal
-        maxVal = max(qVal)
-        optimalAction = self.actions[ random.choice([i for i,j in enumerate(qVal) if j==maxVal]) ]
+        optimalAction = findOptimalAction(state)
         
         # Choose whether to act optimally or act randomly
         if random.random() <= epsilon:
@@ -92,11 +84,10 @@ class LearningAgent(Agent):
         reward = self.env.act(self, action)
          
         # Update the old state variables
-        self.s_a = s_a
+        self.s_a = self.stateActionTuple(state, action)
         self.reward = reward
         
-        print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, waypoint =  {}".format(deadline, inputs, action, reward, self.next_waypoint)  # [debug]
-
+        #print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, #waypoint =  {}".format(deadline, inputs, action, reward, self.next_waypoint)  # [debug]
 
 def run():
     """Run the agent for a finite number of trials."""
@@ -104,12 +95,13 @@ def run():
     # Set up environment and agent
     e = Environment()  # create environment (also adds some dummy traffic)
     a = e.create_agent(LearningAgent)  # create agent
-    e.set_primary_agent(a, enforce_deadline=False)  # set agent to track
+    e.set_primary_agent(a, enforce_deadline=True)  # set agent to track
 
     # Now simulate it
-    sim = Simulator(e, update_delay=1.0)  # reduce update_delay to speed up simulation
-    sim.run(n_trials=10)  # press Esc or close pygame window to quit
-
+    sim = Simulator(e, update_delay=.002)  # reduce update_delay to speed up simulation
+    sim.run(n_trials=100)  # press Esc or close pygame window to quit
+    sim = Simulator(e, update_delay=1)
+    sim.run(n_trials=5)
 
 if __name__ == '__main__':
     run()
