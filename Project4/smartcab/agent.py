@@ -23,18 +23,21 @@ class LearningAgent(Agent):
         self.Q = {}
         self.s_a = None
         self.reward = None
+        self.netReward = 0
         
     def reset(self, destination=None):
         """ Resets the LearningAgent.  Also called after __init__ by the environment on start """
         self.planner.route_to(destination)
         self.s_a = None
         self.reward = None
+        print "Self reward = {}".format(self.netReward)
+        self.netReward = 0
         
     def update(self, t):
         # Q function learning parameters
-        defaultVal = 4.
-        epsilon = .1
-        learningRate = 1./(t+1)**(.6)
+        defaultVal = 3.
+        epsilon = .06
+        learningRate = 1./(t+1)
         discountFactor = 1/2.
         
         # Gather inputs
@@ -86,6 +89,7 @@ class LearningAgent(Agent):
         # Update the old state variables
         self.s_a = self.stateActionTuple(state, action)
         self.reward = reward
+        self.netReward += reward
         
         #print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, #waypoint =  {}".format(deadline, inputs, action, reward, self.next_waypoint)  # [debug]
 
@@ -98,7 +102,7 @@ def run():
     e.set_primary_agent(a, enforce_deadline=True)  # set agent to track
 
     # Now simulate it
-    sim = Simulator(e, update_delay=.002)  # reduce update_delay to speed up simulation
+    sim = Simulator(e,update_delay=0)  # reduce update_delay to speed up simulation
     sim.run(n_trials=100)  # press Esc or close pygame window to quit
     sim = Simulator(e, update_delay=1)
     sim.run(n_trials=5)
