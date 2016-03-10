@@ -26,7 +26,7 @@ The set of states I chose to model the environment are as follows, along with a 
 	
 	This is another factor that affects how you drive.  Since the reward of reaching the desired end state is larger than the possible positive or negative rewards in absolute value at any interrsection, it may be the case that when a car is near the goal but almost out of time it wants to skimp on the rules and incur negative rewards for a bit in order to be able to reach the destination on time and get the large positive reward that comes with it.  Since the negative reward is $-1$, I chose to use whether the deadline is within 6 or not, for the environment isn't very large, and there's little gain to be had to start rushing and incurring negative rewards before, since with 6 negative rewards of value $-1$ and the 6 unrecieved postiive rewards of $0.5$ for not doing wrong actions, we already almost fully cancel out the reward for reaching the final state.
 	
-The environment is modeled as an ever-changing intersection with the use of these variables.  At every time step, one ends up at the same place.  Cars appear, lights change, and waypoints change as given by the actual full environment outside these variables.  However, this myopic is sufficient, since the car does not need to see past the string of intersections in order to make its decisions except for figuring out how to get to the destination.  However, that is already taken care of by the planner, which takes into consideration the bearing and the relative positions of the car and the destination.
+The environment is modeled as an ever-changing intersection with the use of these variables.  At every time step, one ends up at the same place.  Cars appear, lights change, and waypoints change as given by the actual full environment outside these variables.  However, this myopic worldview is sufficient, since the car does not need to see past the string of intersections in order to make its decisions except for figuring out how to get to the destination.  However, that is already taken care of by the planner, which takes into consideration the bearing and the relative positions of the car and the destination.
 \end{list}
 \section{Implement Q-Learning}
 Well, first of all the agent is much more effective at reaching the target after implmenting Q-learning, at least after going through a large amount of rounds of learning.  At first, obviously, it's still going to be mostly random.  It still doesn't reach the target a lot of the time, but that's still a massive improvement.    It seems to go in circles sometimes for no particular reasion, making four right turns in a row sometimes.  
@@ -35,24 +35,7 @@ First of all, the $deadline\_approaching$ variable was removed from the list of 
 
 Furthermore, I reduced the initialized default values for Q from 10 to 4.  It turned out that setting them to 10 slowed down the convergence of Q to it's actual values by too much.  Because the learning rate went as $\alpha = 1/t$, by the time some of the rarer state-action pairs were being accessed, the learning rate was too slow to reduce the 10s to anywhere near their actual values.  However, when Q is nearer the actual expected values of states, which tend to be around 2-3, then we create a model that is still very exploratory, but not too much so to the point of not learning the good choices in time.   I reduced $\epsilon$ , the frequency with which random actions are taken, from $.1$ to $.06$, although this didn't have much effect except to make it so that there are less random actions in the model once it's been trained.  Having epsilon go even lower but start higher by allowing it to vary with $t$ would have been appropriate as well, but just having it set to a constant sufficed for our purposes.
 
+Rare state-action pairs were, well, rare.  And because of this, since $\alpha$ was a globally set variable, sometimes $\alpha$ would decrease too quickly to meaningfully learn how to act on rare states.  This was especially a problem when Q was initialized to 10, and although this problem was mitigated  when Q was initialized to a much lower value, it is still something that was able to be improved.  Thus, I made $\alpha = \alpha(S,A)$, the learning rate was made to be a function of the state-action pair, where it went as $1/t$, except where $t$ here was the amount of times the state-action pair $(S,A)$ was visited as opposed to how many times states were visited in general.  It makes no sense not to learn how to handle a novel state from the first occurance of a novel state just because it happened to occur 2000 t steps in.
 
-\subsection{AdaBoost}
-\begin{list}{$\bullet$}{\addtolength{\parsep}{1mm}}
-
-	\item Time consumption and F1 score table (averaged over four runs)
-
-		\begin{table}[htbp]
-		\begin{center}
-		\begin{tabular}{| l | l | l | l |} \hline
-			& \multicolumn{3}{| c | }{Training set size} \\ \cline{2-4}
-							& 100	& 200	& 300 \\ \hline
-			Training time (secs) 		&0.087	&0.088	&0.098	\\ \hline
-			Prediction time (secs)	&0.005	&0.008	&0.008	\\ \hline
-			F1 score for training set	&0.964	&0.867	&0.848	\\ \hline
-			F1 score for test set	&0.716	&0.785	&0.803	\\ \hline
-		\end{tabular}
-		\end{center}
-		\end{table}
-\end{list}
-
+My agent definitely gets quite close to finding an optimal policy!  After the 100 trials of learning, it gets to the destination very efficiently (at least as efficiently it can reach the destination using the built-in planner) and rarely incurs penalties.  From many runs of the final code, it has never failed to reach the destination in time with positive reward.  Typically, in the 10 test runs after the 100 trials, it only makes a suboptimal stop maybe twice or thrice, occasionally because of the constant $\epsilon$ value resulting in a random wrong action, on other occasions because of a novel state that not much learning has occured on.  There are 1536 state-action pairs, and most of them are uncommon (involving multiple cars at an intersection), so we can't expect the agent to learn every one of them, mostly just the more common ones.
 \end{document}

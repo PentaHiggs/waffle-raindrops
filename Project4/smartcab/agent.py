@@ -21,9 +21,11 @@ class LearningAgent(Agent):
         self.stateActionTuple = namedtuple('stateActionTuple',
                         ['state', 'action'])                        
         self.Q = {}
+        self.timesVisited = {}
         self.s_a = None
         self.reward = None
         self.netReward = 0
+        self.debug = False
         
     def reset(self, destination=None):
         """ Resets the LearningAgent.  Also called after __init__ by the environment on start """
@@ -36,9 +38,9 @@ class LearningAgent(Agent):
     def update(self, t):
         # Q function learning parameters
         defaultVal = 3.
-        epsilon = .06
-        learningRate = 1./(t+1)
+        epsilon = .07
         discountFactor = 1/2.
+        isRandom = False
         
         # Gather inputs
         self.next_waypoint = self.planner.next_waypoint()  # from route planner, also displayed by simulator
@@ -70,6 +72,7 @@ class LearningAgent(Agent):
         
         optimal_s_a = self.stateActionTuple(state, findOptimalAction(state))
         if not self.s_a == None: # if this isn't the first time we run update(self, t)
+            learningRate = 1./(5*self.timesVisited[self.s_a]+1)
             self.Q[self.s_a] = (1-learningRate) * self.Q[self.s_a] + \
                 learningRate * (self.reward + discountFactor * (self.Q[optimal_s_a]))  
            
@@ -80,6 +83,7 @@ class LearningAgent(Agent):
         # Choose whether to act optimally or act randomly
         if random.random() <= epsilon:
             action = self.actions[random.randint(0,3)]
+            isRandom = True
         else:
             action = optimalAction
             
@@ -88,10 +92,17 @@ class LearningAgent(Agent):
          
         # Update the old state variables
         self.s_a = self.stateActionTuple(state, action)
+        
+        if self.timesVisited.has_key(self.s_a):
+            self.timesVisited[self.s_a] += 1
+        else:
+            self.timesVisited[self.s_a] =1
+            
         self.reward = reward
         self.netReward += reward
         
-        #print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, #waypoint =  {}".format(deadline, inputs, action, reward, self.next_waypoint)  # [debug]
+        if self.debug:
+            print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, random = {}, \waypoint =  {}".format(deadline, inputs, action, reward, isRandom, self.next_waypoint)
 
 def run():
     """Run the agent for a finite number of trials."""
@@ -104,8 +115,10 @@ def run():
     # Now simulate it
     sim = Simulator(e,update_delay=0)  # reduce update_delay to speed up simulation
     sim.run(n_trials=100)  # press Esc or close pygame window to quit
+    
+    a.debug = True
     sim = Simulator(e, update_delay=1)
-    sim.run(n_trials=5)
+    sim.run(n_trials=10)
 
 if __name__ == '__main__':
     run()
