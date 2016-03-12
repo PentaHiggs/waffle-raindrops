@@ -15,7 +15,6 @@ class LearningAgent(Agent):
         self.planner = RoutePlanner(self.env, self)  # simple route planner to get next_waypoint
         
         # TODO: Initialize any additional variables here    
-        self.actions = [None, 'forward', 'left', 'right']
         self.stateTuple = namedtuple('stateTuple', 
                         ['light','oncoming','right','left','next_waypoint'])
         self.stateActionTuple = namedtuple('stateActionTuple',
@@ -36,9 +35,11 @@ class LearningAgent(Agent):
         self.netReward = 0
         
     def update(self, t):
+        actions = [None, 'forward', 'left', 'right']
+        
         # Q function learning parameters
         defaultVal = 3.
-        epsilon = .07
+        epsilon = .06
         discountFactor = 1/2.
         isRandom = False
         
@@ -60,7 +61,7 @@ class LearningAgent(Agent):
         # Update Q function
         def findOptimalAction(state): 
             qVal = [defaultVal for i in range(4)]
-            for i, action in enumerate(self.actions):
+            for i, action in enumerate(actions):
                 s_a = self.stateActionTuple(state, action)
                 if self.Q.has_key(s_a):
                     qVal[i] = self.Q[s_a]
@@ -68,7 +69,7 @@ class LearningAgent(Agent):
                     self.Q[s_a] = defaultVal
             maxVal = max(qVal)
             #print "Q value of action is {}".format(maxVal)        
-            return self.actions[ random.choice([i for i,j in enumerate(qVal) if j==maxVal]) ]
+            return actions[ random.choice([i for i,j in enumerate(qVal) if j==maxVal]) ]
         
         optimal_s_a = self.stateActionTuple(state, findOptimalAction(state))
         if not self.s_a == None: # if this isn't the first time we run update(self, t)
@@ -82,7 +83,7 @@ class LearningAgent(Agent):
         
         # Choose whether to act optimally or act randomly
         if random.random() <= epsilon:
-            action = self.actions[random.randint(0,3)]
+            action = actions[random.randint(0,3)]
             isRandom = True
         else:
             action = optimalAction

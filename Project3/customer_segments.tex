@@ -33,6 +33,7 @@
     \usepackage{hyperref}
     \usepackage{longtable} % longtable support required by pandoc >1.10
     \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage{ulem} % ulem is needed to support strikethroughs (\sout)
     
 
     
@@ -86,6 +87,26 @@
     \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
     \newcommand{\NormalTok}[1]{{#1}}
     
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
     % Define a nice break command that doesn't care if a line doesn't already
     % exist.
     \def\br{\hspace*{\fill} \\* }
@@ -111,67 +132,67 @@
     \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
 \def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
 
-\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
-\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
-\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
-\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
-\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
-\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
-\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
-\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
-\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
-\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
-\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
-\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
-\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
-\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
-\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
-\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
-\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
-\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
-\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
-\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
-\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
-\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
-\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
-\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
-\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
 \expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
-\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
-\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
-\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
-\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
-\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
-\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
 \expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
-\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
-\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
-\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
-\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
-\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
-\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
-\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
-\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
-\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
-\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
-\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
-\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
-\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
-\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
-\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
-\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
-\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
-\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
-\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
-\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
-\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
-\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
 \expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
 \expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
 \expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
-\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
 \expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
 \expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
 
 \def\PYZbs{\char`\\}
 \def\PYZus{\char`\_}
@@ -533,26 +554,26 @@ two-dimentional data than it is to visualize data with more dimensions.
 
     \begin{Verbatim}[commandchars=\\\{\}]
 Mean Component Values
-[[ 1.         -0.12901967 -0.13132791 -0.06493955  0.20936367 -0.05592367]
- [ 0.0303601   1.         -0.7393105  -0.02314504  0.22661704 -0.2375172 ]
- [ 0.03944408 -0.22926999  1.          0.02694779 -0.12477562 -0.06379653]
- [-0.20193242 -0.01988549  0.13704413  1.         -0.04863245 -0.31015973]
- [ 0.02686515 -0.13384623 -0.83631176  0.05352119  1.          0.12046216]
- [-0.09603982 -0.03281383 -0.11180943 -0.04958138  0.04784904  1.        ]]
+[[ 1.         -0.12836442 -0.12953472 -0.06492544  0.20788799 -0.05639315]
+ [ 0.02866213  1.         -0.75520885 -0.02350706  0.22705674 -0.2358449 ]
+ [ 0.04007053 -0.21974488  1.          0.02745783 -0.11980633 -0.06747741]
+ [-0.20199713 -0.01964304  0.13649125  1.         -0.04846484 -0.31031462]
+ [ 0.02704208 -0.13310814 -0.83740173  0.05344281  1.          0.12039391]
+ [-0.0960108  -0.03225075 -0.11136621 -0.0494368   0.04763794  1.        ]]
 STD of Component Values
-[[ 0.          0.00475072  0.01599117  0.00061631  0.01527373  0.00334456]
- [ 0.0127133   0.          0.12324321  0.00333809  0.01564728  0.01430255]
- [ 0.00579105  0.07963015  0.          0.00648758  0.06897069  0.0295616 ]
- [ 0.00066543  0.00245574  0.00494599  0.          0.00168564  0.00260904]
- [ 0.0015218   0.00955093  0.01790579  0.00086285  0.          0.00096728]
- [ 0.00073379  0.00301862  0.0056726   0.00293519  0.00227878  0.        ]]
+[[ 0.          0.00407042  0.01362858  0.00059016  0.01411681  0.00284008]
+ [ 0.0083461   0.          0.070543    0.00207893  0.01411776  0.00796341]
+ [ 0.00478026  0.05404569  0.          0.00614831  0.06596449  0.01973268]
+ [ 0.00048405  0.0015978   0.00352109  0.          0.00129619  0.0022417 ]
+ [ 0.00135639  0.0089794   0.01749965  0.0008047   0.          0.00085047]
+ [ 0.00058457  0.00275429  0.00357054  0.00250576  0.00164621  0.        ]]
 Inverse Matrix
-[[ 1.03400524  0.11209704  0.0201101   0.08921221 -0.24185868  0.14253815]
- [-0.0186789   1.15377359  0.73381528  0.03286046 -0.18122867  0.35183454]
- [-0.05778489  0.3135151   1.32587189 -0.03083751  0.09855689  0.13438278]
- [ 0.24517886  0.04285543 -0.06963965  1.03784452 -0.03579911  0.34565745]
- [-0.10490676  0.40330793  1.19656935 -0.08678048  1.07517926  0.00982855]
- [ 0.10940785  0.06650639  0.11354811  0.06180841 -0.07137655  1.05692753]]
+[[ 1.03415807  0.11167148  0.02076289  0.08909392 -0.24033441  0.14263955]
+ [-0.01750412  1.14966106  0.74750091  0.03258631 -0.18306887  0.35274639]
+ [-0.05714585  0.29798188  1.3155377  -0.03117916  0.0938961   0.13484407]
+ [ 0.24525912  0.04338173 -0.06805972  1.03778384 -0.03516498  0.34574295]
+ [-0.10443561  0.38944691  1.19066085 -0.08705776  1.07122229  0.01031839]
+ [ 0.10946163  0.06457642  0.11252209  0.06158457 -0.07129123  1.05668922]]
     \end{Verbatim}
 
     \begin{center}
@@ -623,6 +644,14 @@ approximately Gaussian, but having one big cluster isn't very
 instructive, if we want just one center to our data we can always just
 use the mean of the data, however we're looking to reveal more structure
 than that, so K-means will be our clustering algorithm of choice here.
+
+The last thing that must be decided is the number of clusters to be
+used. If we look at the last of the histograms and graphs immediately
+below, at the histogram for PCA1 on log data, we can immediately see how
+we can split the data along either side of zero. Hence, division into
+two clusters should at least be possible. There really doesn't seem to
+be much of a basis for splitting into more clusters, and attempting the
+actual clustering seems to back this up.
 
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}4}]:} \PY{k}{print} \PY{l+s}{\PYZdq{}}\PY{l+s}{Histogram of categories}\PY{l+s}{\PYZdq{}}
@@ -722,112 +751,182 @@ demo} from the sklearn documentation.
     \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}7}]:} \PY{c}{\PYZsh{} TODO: Implement your clustering algorithm here, and fit it to the reduced data for visualization}
-        \PY{c}{\PYZsh{} The visualizer below assumes your clustering object is named \PYZsq{}clusters\PYZsq{}}
-        \PY{c}{\PYZsh{} type = 0 \PYZhy{}\PYZgt{} GMM  type = 1 \PYZhy{}\PYZgt{} KMeans}
-        \PY{n+nb}{type} \PY{o}{=} \PY{l+m+mi}{1}
-        \PY{n}{n\PYZus{}things} \PY{o}{=} \PY{l+m+mi}{2}
-        \PY{n}{clusters} \PY{o}{=} \PY{n}{GMM}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{n}{n\PYZus{}things}\PY{p}{)} \PY{k}{if} \PY{n+nb}{type}\PY{o}{==}\PY{l+m+mi}{0} \PY{k}{else} \PY{n}{KMeans}\PY{p}{(}\PY{n}{n\PYZus{}clusters}\PY{o}{=}\PY{n}{n\PYZus{}things}\PY{p}{)}
-        \PY{k}{if} \PY{n+nb}{type} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
-            \PY{n}{clusters} \PY{o}{=} \PY{n}{GMM}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{n}{n\PYZus{}things}\PY{p}{)}
-        \PY{k}{else}\PY{p}{:}
-            \PY{n}{clusters} \PY{o}{=} \PY{n}{KMeans}\PY{p}{(}\PY{n}{n\PYZus{}clusters}\PY{o}{=}\PY{n}{n\PYZus{}things}\PY{p}{)}
-        \PY{n}{clusters}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{)}
-        \PY{k}{print} \PY{n}{clusters}
-\end{Verbatim}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-KMeans(copy\_x=True, init='k-means++', max\_iter=300, n\_clusters=2, n\_init=10,
-    n\_jobs=1, precompute\_distances='auto', random\_state=None, tol=0.0001,
-    verbose=0)
-    \end{Verbatim}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}8}]:} \PY{c}{\PYZsh{} Plot the decision boundary by building a mesh grid to populate a graph.}
-        \PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max} \PY{o}{=} \PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}
-        \PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max} \PY{o}{=} \PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}
-        \PY{n}{hx} \PY{o}{=} \PY{p}{(}\PY{n}{x\PYZus{}max}\PY{o}{\PYZhy{}}\PY{n}{x\PYZus{}min}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{1000.}
-        \PY{n}{hy} \PY{o}{=} \PY{p}{(}\PY{n}{y\PYZus{}max}\PY{o}{\PYZhy{}}\PY{n}{y\PYZus{}min}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{1000.}
-        \PY{n}{xx}\PY{p}{,} \PY{n}{yy} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{meshgrid}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max}\PY{p}{,} \PY{n}{hx}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max}\PY{p}{,} \PY{n}{hy}\PY{p}{)}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c}{\PYZsh{} Condensated several steps into one convenient function to graph the results of a clustering.}
         
-        \PY{c}{\PYZsh{} Obtain labels for each point in mesh. Use last trained model.}
-        \PY{n}{Z} \PY{o}{=} \PY{n}{clusters}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{c\PYZus{}}\PY{p}{[}\PY{n}{xx}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{yy}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+        \PY{k}{def} \PY{n+nf}{graph\PYZus{}clusters}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{,} \PY{n}{clusters}\PY{p}{)}\PY{p}{:}     
+            \PY{c}{\PYZsh{} Plot the decision boundary by building a mesh grid to populate a graph.}
+            \PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max} \PY{o}{=} \PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}
+            \PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max} \PY{o}{=} \PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}
+            \PY{n}{hx} \PY{o}{=} \PY{p}{(}\PY{n}{x\PYZus{}max}\PY{o}{\PYZhy{}}\PY{n}{x\PYZus{}min}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{1000.}
+            \PY{n}{hy} \PY{o}{=} \PY{p}{(}\PY{n}{y\PYZus{}max}\PY{o}{\PYZhy{}}\PY{n}{y\PYZus{}min}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{1000.}
+            \PY{n}{xx}\PY{p}{,} \PY{n}{yy} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{meshgrid}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max}\PY{p}{,} \PY{n}{hx}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max}\PY{p}{,} \PY{n}{hy}\PY{p}{)}\PY{p}{)}
+        
+            \PY{c}{\PYZsh{} Obtain labels for each point in mesh. Use last trained model.}
+            \PY{n}{Z} \PY{o}{=} \PY{n}{clusters}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{c\PYZus{}}\PY{p}{[}\PY{n}{xx}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{yy}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+            
+            \PY{c}{\PYZsh{} TODO: Find the centroids for KMeans or the cluster means for GMM }
+            \PY{n}{centroids} \PY{o}{=} \PY{n}{clusters}\PY{o}{.}\PY{n}{means\PYZus{}} \PY{k}{if} \PY{n+nb}{isinstance}\PY{p}{(}\PY{n}{clusters}\PY{p}{,}\PY{n}{GMM}\PY{p}{)} \PY{k}{else} \PY{n}{clusters}\PY{o}{.}\PY{n}{cluster\PYZus{}centers\PYZus{}}
+            \PY{k}{print} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZhy{}\PYZhy{} Centers \PYZhy{}\PYZhy{}}\PY{l+s}{\PYZdq{}}
+            \PY{k}{print} \PY{n}{centroids}
+            \PY{k}{print} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZhy{}\PYZhy{} Centers in Original Coordinates \PYZhy{}\PYZhy{}}\PY{l+s}{\PYZdq{}}
+            \PY{n}{vectors} \PY{o}{=} \PY{n}{pca2}\PY{o}{.}\PY{n}{inverse\PYZus{}transform}\PY{p}{(}\PY{n}{centroids}\PY{p}{)}
+            \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{vectors}\PY{p}{:}
+                \PY{k}{print} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{n}{v}\PY{p}{)} \PY{o}{*} \PY{n}{data}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
+                
+            \PY{c}{\PYZsh{} Put the result into a color plot}
+            \PY{n}{Z} \PY{o}{=} \PY{n}{Z}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{xx}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{clf}\PY{p}{(}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{Z}\PY{p}{,} \PY{n}{interpolation}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{nearest}\PY{l+s}{\PYZsq{}}\PY{p}{,}
+                       \PY{n}{extent}\PY{o}{=}\PY{p}{(}\PY{n}{xx}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{xx}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{yy}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{yy}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                       \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{Paired}\PY{p}{,}
+                       \PY{n}{aspect}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{auto}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{origin}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{lower}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+        
+        
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{k.}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{markersize}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{centroids}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{centroids}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+                        \PY{n}{marker}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{x}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{169}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,}
+                        \PY{n}{color}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{w}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Clustering on the wholesale grocery dataset (PCA\PYZhy{}reduced data)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{\PYZsq{}}
+                      \PY{l+s}{\PYZsq{}}\PY{l+s}{Centroids are marked with white cross}\PY{l+s}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max}\PY{p}{)}
+            \PY{c}{\PYZsh{}plt.xticks(())}
+            \PY{c}{\PYZsh{}plt.yticks(())}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{p}{[}\PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max}\PY{p}{,} \PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max}\PY{p}{]}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}9}]:} \PY{c}{\PYZsh{} TODO: Find the centroids for KMeans or the cluster means for GMM }
-        \PY{n}{centroids} \PY{o}{=} \PY{n}{clusters}\PY{o}{.}\PY{n}{means\PYZus{}} \PY{k}{if} \PY{n+nb}{type}\PY{o}{==}\PY{l+m+mi}{0} \PY{k}{else} \PY{n}{clusters}\PY{o}{.}\PY{n}{cluster\PYZus{}centers\PYZus{}}
-        \PY{k}{print} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZhy{}\PYZhy{} Centers \PYZhy{}\PYZhy{}}\PY{l+s}{\PYZdq{}}
-        \PY{k}{print} \PY{n}{centroids}
-        \PY{k}{print} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZhy{}\PYZhy{} Centers in Original Coordinates  \PYZhy{}\PYZhy{}}\PY{l+s}{\PYZdq{}}
-        \PY{n}{vectors} \PY{o}{=} \PY{n}{pca2}\PY{o}{.}\PY{n}{inverse\PYZus{}transform}\PY{p}{(}\PY{n}{centroids}\PY{p}{)}
-        \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{vectors}\PY{p}{:}
-            \PY{n}{norm} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{v}\PY{p}{)}\PY{p}{)}
-            \PY{n}{vp} \PY{o}{=} \PY{n}{v} \PY{o}{/} \PY{n}{norm}
-            \PY{k}{print} \PY{l+s}{\PYZdq{}}\PY{l+s+si}{\PYZpc{}i}\PY{l+s}{ * }\PY{l+s+si}{\PYZpc{}r}\PY{l+s}{ = }\PY{l+s+si}{\PYZpc{}r}\PY{l+s}{ }\PY{l+s}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{norm}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{around}\PY{p}{(}\PY{n}{vp}\PY{p}{,}\PY{n}{decimals}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)} \PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{around}\PY{p}{(}\PY{n}{v}\PY{p}{,}\PY{n}{decimals}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c}{\PYZsh{} Try three different clusterings}
+        
+        \PY{n}{meanClusters2} \PY{o}{=} \PY{n}{KMeans}\PY{p}{(}\PY{n}{n\PYZus{}clusters}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{meanClusters2}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{)}
+        \PY{n}{graph\PYZus{}clusters}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{,} \PY{n}{meanClusters2}\PY{p}{)}
+        
+        \PY{n}{meanClusters3} \PY{o}{=} \PY{n}{KMeans}\PY{p}{(}\PY{n}{n\PYZus{}clusters}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+        \PY{n}{meanClusters3}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{)}
+        \PY{n}{graph\PYZus{}clusters}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{,} \PY{n}{meanClusters3}\PY{p}{)}
+        
+        \PY{n}{gaussianClusters} \PY{o}{=} \PY{n}{GMM}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+        \PY{n}{gaussianClusters}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{)}
+        \PY{n}{graph\PYZus{}clusters}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{,} \PY{n}{gaussianClusters}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
 -- Centers --
-[[ 2.21427  -0.241622]
- [-1.504351  0.164155]]
--- Centers in Original Coordinates  --
-2 * [-0.53134, 0.02045, 0.11389, -0.70802, -0.01808, -0.45019] = [-1.26, 0.05, 0.27, -1.69, -0.04, -1.07] 
-3 * [-0.08969, -0.35581, -0.36583, -0.22292, -0.73629, -0.37377] = [-0.34, -1.35, -1.39, -0.85, -2.8, -1.42]
+[[-1.504351  0.164155]
+ [ 2.21427  -0.241622]]
+-- Centers in Original Coordinates --
+Fresh               8994.280204
+Milk                1908.923867
+Grocery             2366.187501
+Frozen              2080.775809
+Detergents\_Paper     290.422230
+Delicatessen         681.298712
+dtype: float64
+Fresh                3570.082284
+Milk                 7748.505394
+Grocery             12462.617477
+Frozen                899.888171
+Detergents\_Paper     4567.020517
+Delicatessen          965.713272
+dtype: float64
     \end{Verbatim}
 
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{customer_segments_files/customer_segments_24_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}10}]:} \PY{c}{\PYZsh{} Put the result into a color plot}
-         \PY{n}{Z} \PY{o}{=} \PY{n}{Z}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{xx}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{clf}\PY{p}{(}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{Z}\PY{p}{,} \PY{n}{interpolation}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{nearest}\PY{l+s}{\PYZsq{}}\PY{p}{,}
-                    \PY{n}{extent}\PY{o}{=}\PY{p}{(}\PY{n}{xx}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{xx}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{yy}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{yy}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,}
-                    \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{Paired}\PY{p}{,}
-                    \PY{n}{aspect}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{auto}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{origin}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{lower}\PY{l+s}{\PYZsq{}}\PY{p}{)}
-         
-         
-         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{k.}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{markersize}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{centroids}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{centroids}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
-                     \PY{n}{marker}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{x}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{169}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,}
-                     \PY{n}{color}\PY{o}{=}\PY{l+s}{\PYZsq{}}\PY{l+s}{w}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Clustering on the wholesale grocery dataset (PCA\PYZhy{}reduced data)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{\PYZsq{}}
-                   \PY{l+s}{\PYZsq{}}\PY{l+s}{Centroids are marked with white cross}\PY{l+s}{\PYZsq{}}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{ylim}\PY{p}{(}\PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max}\PY{p}{)}
-         \PY{c}{\PYZsh{}plt.xticks(())}
-         \PY{c}{\PYZsh{}plt.yticks(())}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{p}{[}\PY{n}{x\PYZus{}min}\PY{p}{,} \PY{n}{x\PYZus{}max}\PY{p}{,} \PY{n}{y\PYZus{}min}\PY{p}{,} \PY{n}{y\PYZus{}max}\PY{p}{]}\PY{p}{)}
-         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
+-- Centers --
+[[ 2.027771 -2.312928]
+ [-1.783598 -0.028749]
+ [ 1.587554  1.214244]]
+-- Centers in Original Coordinates --
+Fresh                892.133951
+Milk                5142.578906
+Grocery             9917.393601
+Frozen               338.399647
+Detergents\_Paper    3643.744429
+Delicatessen         326.762882
+dtype: float64
+Fresh               8272.469145
+Milk                1657.084169
+Grocery             2056.523264
+Frozen              1987.242967
+Detergents\_Paper     233.940808
+Delicatessen         592.260342
+dtype: float64
+Fresh               10793.301986
+Milk                 7665.389412
+Grocery             10370.687132
+Frozen               2038.972541
+Detergents\_Paper     3042.418142
+Delicatessen         1846.931679
+dtype: float64
+    \end{Verbatim}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{customer_segments_files/customer_segments_26_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{customer_segments_files/customer_segments_24_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+-- Centers --
+[[ 1.534037  0.359204]
+ [-1.534371  0.282482]
+ [-0.41963  -1.469219]]
+-- Centers in Original Coordinates --
+Fresh               6064.208603
+Milk                6532.221145
+Grocery             9538.586312
+Frozen              1356.172047
+Detergents\_Paper    2820.513421
+Delicatessen        1184.957598
+dtype: float64
+Fresh               9804.812660
+Milk                1923.052932
+Grocery             2353.372476
+Frozen              2215.807217
+Detergents\_Paper     285.406574
+Delicatessen         720.414481
+dtype: float64
+Fresh               2432.868949
+Milk                2246.027687
+Grocery             3458.433724
+Frozen               778.313537
+Detergents\_Paper     608.839216
+Delicatessen         348.469808
+dtype: float64
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{customer_segments_files/customer_segments_24_5.png}
     \end{center}
     { \hspace*{\fill} \\}
     
     \textbf{7)} What are the central objects in each cluster? Describe them
 as customers.
 
-    If we look at the first center, which corresponds to the right-most
-cluster, we'll see that it has a significantly larger Grocery and Milk
-profile than the data mean, and a much larger Paper/Detergents profile
-as well. It corresponds closely to the typical ordering profile of a
-Grocery / Supermarket store, which isn't surprising given that the
-cluster seems to be distributed along the direction of the second PCA
-component which was established to correspond to a grocery store profile
-of orders as well.
+    If we look at one center, it has abnormally high amounts in the Grocery,
+Milk, and Detergents/Paper categories. They are either near or exceed
+the actual maximal values in the data. The reason for this is that the
+PCA was done on the log unit-variance scaled data, and the variacne
+explained doesn't cut off as quickly as it does on the unmodified data,
+hence it's understandable that the first two PCA components produce
+clusters with centers that can't actually be customers. However, it's
+still very interpretable, and in this case it can be interpreted as the
+typical Grocery store, since those three categories would be expected to
+dominate in such a case.
 
-The second center, corresponding to the bottom-most cluster, has about
-the same distribution amongst the different categories of orders as the
-mean. It's representative of the typical big customer.
-
-The third center is difficult to categorize as a center, since the
-cluster itself seems to consist mostly of outlier points that don't
-neatly belong in either of the first two clusters. However, upon
-inspection, it has a very high Fresh and Frozen ratio, so it's possible
-to interpret the third center as being the typical restaurant customer,
-since such a customer would be expected to order these sorts of things.
+For the other center, it consists of a large amount of Fresh along with
+a good amount of Frozen. This center is to the left and covers a greater
+range of data points than the other. However, despite that I still think
+that we can interpret this cluster center as corresponding to a typical
+customer in Food Service, ordering mostly Fresh and Frozen ingredients
+in order to cook and serve.
 
     \subsubsection{Conclusions}\label{conclusions}
 
