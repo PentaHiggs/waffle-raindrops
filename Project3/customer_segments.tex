@@ -554,26 +554,26 @@ two-dimentional data than it is to visualize data with more dimensions.
 
     \begin{Verbatim}[commandchars=\\\{\}]
 Mean Component Values
-[[ 1.         -0.12836442 -0.12953472 -0.06492544  0.20788799 -0.05639315]
- [ 0.02866213  1.         -0.75520885 -0.02350706  0.22705674 -0.2358449 ]
- [ 0.04007053 -0.21974488  1.          0.02745783 -0.11980633 -0.06747741]
- [-0.20199713 -0.01964304  0.13649125  1.         -0.04846484 -0.31031462]
- [ 0.02704208 -0.13310814 -0.83740173  0.05344281  1.          0.12039391]
- [-0.0960108  -0.03225075 -0.11136621 -0.0494368   0.04763794  1.        ]]
+[[ 1.         -0.12864474 -0.12950368 -0.06492207  0.20772508 -0.05629193]
+ [ 0.02927879  1.         -0.7506048  -0.02342539  0.2275373  -0.23616571]
+ [ 0.04005207 -0.22599926  1.          0.02761189 -0.11762155 -0.06535197]
+ [-0.20201945 -0.01964551  0.13664227  1.         -0.04851627 -0.31016802]
+ [ 0.02701769 -0.1326196  -0.83829251  0.05341933  1.          0.12034048]
+ [-0.09599601 -0.03279289 -0.11122933 -0.04960842  0.04757085  1.        ]]
 STD of Component Values
-[[ 0.          0.00407042  0.01362858  0.00059016  0.01411681  0.00284008]
- [ 0.0083461   0.          0.070543    0.00207893  0.01411776  0.00796341]
- [ 0.00478026  0.05404569  0.          0.00614831  0.06596449  0.01973268]
- [ 0.00048405  0.0015978   0.00352109  0.          0.00129619  0.0022417 ]
- [ 0.00135639  0.0089794   0.01749965  0.0008047   0.          0.00085047]
- [ 0.00058457  0.00275429  0.00357054  0.00250576  0.00164621  0.        ]]
+[[ 0.          0.00444574  0.01395812  0.00071753  0.01473915  0.00295652]
+ [ 0.00992424  0.          0.0782913   0.00267791  0.01871597  0.0089972 ]
+ [ 0.00485118  0.07857013  0.          0.00643402  0.0701574   0.02743323]
+ [ 0.00047902  0.00178923  0.00408587  0.          0.00144053  0.00069358]
+ [ 0.00138215  0.00994724  0.01952032  0.00085751  0.          0.00094772]
+ [ 0.00031429  0.00317632  0.00386793  0.00076639  0.00186496  0.        ]]
 Inverse Matrix
-[[ 1.03415807  0.11167148  0.02076289  0.08909392 -0.24033441  0.14263955]
- [-0.01750412  1.14966106  0.74750091  0.03258631 -0.18306887  0.35274639]
- [-0.05714585  0.29798188  1.3155377  -0.03117916  0.0938961   0.13484407]
- [ 0.24525912  0.04338173 -0.06805972  1.03778384 -0.03516498  0.34574295]
- [-0.10443561  0.38944691  1.19066085 -0.08705776  1.07122229  0.01031839]
- [ 0.10946163  0.06457642  0.11252209  0.06158457 -0.07129123  1.05668922]]
+[[ 1.03409237  0.11215327  0.02025673  0.08911935 -0.24040291  0.1425938 ]
+ [-0.0179507   1.15266089  0.74120168  0.03281004 -0.18652926  0.35227114]
+ [-0.05741153  0.30568252  1.31604537 -0.0309954   0.08925961  0.13461075]
+ [ 0.24526409  0.04317078 -0.06846919  1.03783627 -0.034914    0.34563244]
+ [-0.10471933  0.39585287  1.19109173 -0.08691775  1.06708412  0.01005968]
+ [ 0.10944299  0.06587679  0.11257566  0.06180361 -0.0717604   1.05688082]]
     \end{Verbatim}
 
     \begin{center}
@@ -651,7 +651,9 @@ below, at the histogram for PCA1 on log data, we can immediately see how
 we can split the data along either side of zero. Hence, division into
 two clusters should at least be possible. There really doesn't seem to
 be much of a basis for splitting into more clusters, and attempting the
-actual clustering seems to back this up.
+actual clustering seems to back this up. This is further backed up by
+the silhouette scores, which are highest for two-cluster KMeans, as can
+be seen right before the answer to 7).
 
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}4}]:} \PY{k}{print} \PY{l+s}{\PYZdq{}}\PY{l+s}{Histogram of categories}\PY{l+s}{\PYZdq{}}
@@ -752,6 +754,7 @@ demo} from the sklearn documentation.
 
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}7}]:} \PY{c}{\PYZsh{} Condensated several steps into one convenient function to graph the results of a clustering.}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k+kn}{import} \PY{n}{metrics}
         
         \PY{k}{def} \PY{n+nf}{graph\PYZus{}clusters}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{,} \PY{n}{clusters}\PY{p}{)}\PY{p}{:}     
             \PY{c}{\PYZsh{} Plot the decision boundary by building a mesh grid to populate a graph.}
@@ -772,7 +775,7 @@ demo} from the sklearn documentation.
             \PY{n}{vectors} \PY{o}{=} \PY{n}{pca2}\PY{o}{.}\PY{n}{inverse\PYZus{}transform}\PY{p}{(}\PY{n}{centroids}\PY{p}{)}
             \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{vectors}\PY{p}{:}
                 \PY{k}{print} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{n}{v}\PY{p}{)} \PY{o}{*} \PY{n}{data}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}
-                
+            \PY{k}{print} \PY{l+s}{\PYZdq{}}\PY{l+s}{ Silhouette Coefficient: \PYZob{}\PYZcb{}}\PY{l+s}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{metrics}\PY{o}{.}\PY{n}{silhouette\PYZus{}score}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{,} \PY{n}{clusters}\PY{o}{.}\PY{n}{labels\PYZus{}}\PY{p}{)}\PY{p}{)}
             \PY{c}{\PYZsh{} Put the result into a color plot}
             \PY{n}{Z} \PY{o}{=} \PY{n}{Z}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{xx}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
             \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
@@ -808,9 +811,9 @@ demo} from the sklearn documentation.
         \PY{n}{meanClusters3}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{)}
         \PY{n}{graph\PYZus{}clusters}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{,} \PY{n}{meanClusters3}\PY{p}{)}
         
-        \PY{n}{gaussianClusters} \PY{o}{=} \PY{n}{GMM}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
-        \PY{n}{gaussianClusters}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{)}
-        \PY{n}{graph\PYZus{}clusters}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{,} \PY{n}{gaussianClusters}\PY{p}{)}
+        \PY{n}{meanClusters4} \PY{o}{=} \PY{n}{KMeans}\PY{p}{(}\PY{n}{n\PYZus{}clusters}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+        \PY{n}{meanClusters4}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{)}
+        \PY{n}{graph\PYZus{}clusters}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{,} \PY{n}{meanClusters4}\PY{p}{)}
 \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
@@ -832,6 +835,7 @@ Frozen                899.888171
 Detergents\_Paper     4567.020517
 Delicatessen          965.713272
 dtype: float64
+ Silhouette Coefficient: 0.419166083203
     \end{Verbatim}
 
     \begin{center}
@@ -841,31 +845,32 @@ dtype: float64
     
     \begin{Verbatim}[commandchars=\\\{\}]
 -- Centers --
-[[ 2.027771 -2.312928]
- [-1.783598 -0.028749]
- [ 1.587554  1.214244]]
+[[ 2.003276 -2.200361]
+ [ 1.597532  1.279829]
+ [-1.775741 -0.026178]]
 -- Centers in Original Coordinates --
-Fresh                892.133951
-Milk                5142.578906
-Grocery             9917.393601
-Frozen               338.399647
-Detergents\_Paper    3643.744429
-Delicatessen         326.762882
+Fresh                967.770457
+Milk                5187.090060
+Grocery             9884.521631
+Frozen               359.007506
+Detergents\_Paper    3594.726669
+Delicatessen         344.795136
 dtype: float64
-Fresh               8272.469145
-Milk                1657.084169
-Grocery             2056.523264
-Frozen              1987.242967
-Detergents\_Paper     233.940808
-Delicatessen         592.260342
+Fresh               11269.803880
+Milk                 7778.022894
+Grocery             10465.321936
+Frozen               2101.629494
+Detergents\_Paper     3073.571144
+Delicatessen         1912.566267
 dtype: float64
-Fresh               10793.301986
-Milk                 7665.389412
-Grocery             10370.687132
-Frozen               2038.972541
-Detergents\_Paper     3042.418142
-Delicatessen         1846.931679
+Fresh               8275.750671
+Milk                1662.922124
+Grocery             2064.246238
+Frozen              1987.046075
+Detergents\_Paper     235.340502
+Delicatessen         593.733697
 dtype: float64
+ Silhouette Coefficient: 0.392358689958
     \end{Verbatim}
 
     \begin{center}
@@ -875,31 +880,40 @@ dtype: float64
     
     \begin{Verbatim}[commandchars=\\\{\}]
 -- Centers --
-[[ 1.534037  0.359204]
- [-1.534371  0.282482]
- [-0.41963  -1.469219]]
+[[-0.923558  1.066035]
+ [ 2.292966 -2.401511]
+ [-2.316957 -1.041468]
+ [ 2.158875  0.810268]]
 -- Centers in Original Coordinates --
-Fresh               6064.208603
-Milk                6532.221145
-Grocery             9538.586312
-Frozen              1356.172047
-Detergents\_Paper    2820.513421
-Delicatessen        1184.957598
+Fresh               15083.551412
+Milk                 2779.040094
+Grocery              3279.670102
+Frozen               2922.878492
+Detergents\_Paper      465.040735
+Delicatessen         1176.721822
 dtype: float64
-Fresh               9804.812660
-Milk                1923.052932
-Grocery             2353.372476
-Frozen              2215.807217
-Detergents\_Paper     285.406574
-Delicatessen         720.414481
+Fresh                 801.797118
+Milk                 5628.136707
+Grocery             11118.821543
+Frozen                309.624609
+Detergents\_Paper     4423.831030
+Delicatessen          324.963392
 dtype: float64
-Fresh               2432.868949
-Milk                2246.027687
-Grocery             3458.433724
-Frozen               778.313537
-Detergents\_Paper     608.839216
-Delicatessen         348.469808
+Fresh               4534.600386
+Milk                1139.061267
+Grocery             1504.433597
+Frozen              1329.358943
+Detergents\_Paper     150.655604
+Delicatessen         326.376641
 dtype: float64
+Fresh                7410.509020
+Milk                 8993.255212
+Grocery             13072.924579
+Frozen               1517.480395
+Detergents\_Paper     4579.774068
+Delicatessen         1637.206215
+dtype: float64
+ Silhouette Coefficient: 0.332881619258
     \end{Verbatim}
 
     \begin{center}
@@ -1011,7 +1025,9 @@ feeding it into, say, a neural network or a support vector machine.
 While some methods, like the boosting methods I employed in the last
 project, don't need data preprocessing, others, like support vector
 machines, benefit greatly from their use. However, the dimensionality
-reduction we can do with PCA would be great for fitting a regression.
+reduction we can do with PCA would be great for fitting a regression,
+which also has the benefit of having easily interpreted coefficients
+(unlike the ICA -\textgreater{} neural network or SVM combination).
 
 
     % Add a bibliography block to the postdoc
