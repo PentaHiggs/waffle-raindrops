@@ -59,19 +59,25 @@ class LearningAgent(Agent):
                                 )
         
         # Update Q function
-        def findOptimalAction(state): 
-            qVal = [defaultVal for i in range(4)]
+        def findOptimalAction(Q, state):
+            """ Finds an optimal action given the Q function and current state.  If more than
+            one action is optimal, then randomly chooses from the set of optimal actions.  If
+            the Q function hasn't been intialized at that state, action pair yet, initializes
+            it at that pair with value defaultVal.
+            """
+            #Initialize the q values for the four action-state pairs to default value
+            qValues = [defaultVal for i in range(4)]
             for i, action in enumerate(actions):
                 s_a = self.stateActionTuple(state, action)
-                if self.Q.has_key(s_a):
-                    qVal[i] = self.Q[s_a]
+                if Q.has_key(s_a):
+                    qValues[i] = Q[s_a]
                 else:
-                    self.Q[s_a] = defaultVal
-            maxVal = max(qVal)
-            #print "Q value of action is {}".format(maxVal)        
-            return actions[ random.choice([i for i,j in enumerate(qVal) if j==maxVal]) ]
+                    Q[s_a] = defaultVal
+            bestQ = max(qValues)
+            # Choose randomly from the list of best actions.     
+            return actions[ random.choice([i for i,qValue in enumerate(qValues) if qValue==bestQ]) ]
         
-        optimal_s_a = self.stateActionTuple(state, findOptimalAction(state))
+        optimal_s_a = self.stateActionTuple(state, findOptimalAction(self.Q, state))
         if not self.s_a == None: # if this isn't the first time we run update(self, t)
             learningRate = 1./(5*self.timesVisited[self.s_a]+1)
             self.Q[self.s_a] = (1-learningRate) * self.Q[self.s_a] + \
@@ -79,7 +85,7 @@ class LearningAgent(Agent):
            
         # TODO: Select action according to your policy
         action = None
-        optimalAction = findOptimalAction(state)
+        optimalAction = findOptimalAction(self.Q, state)
         
         # Choose whether to act optimally or act randomly
         if random.random() <= epsilon:
