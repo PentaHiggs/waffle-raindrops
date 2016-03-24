@@ -45,7 +45,6 @@ class LearningAgent(Agent):
         if self.debug == True:
             print "Positive Rewards = {} out of {}".format(self.positiveRewards, self.totalRewards)
         self.positiveRewards = 0
-        self.totalRewards = 0
         
     def update(self, t):
         actions = [None, 'forward', 'left', 'right']
@@ -118,14 +117,13 @@ class LearningAgent(Agent):
         self.netReward += reward
         
         self.positiveRewards += 1 if (reward > 0) else 0
-        self.totalRewards += 1
         
         if self.debug:
             #print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, random = {}, \waypoint =  {}".format(deadline, inputs, action, reward, isRandom, self.next_waypoint)
             pass
     
     def returnPerformanceMetrics(self):
-        return {'steps': self.totalRewards, 'posRewardSteps': self.positiveRewards} 
+        return {'steps': sum(self.timesVisited.values()), 'posRewardSteps': self.positiveRewards} 
 
     
 def run():
@@ -134,7 +132,7 @@ def run():
     # Set up environment and agent
     e = Environment()
 
-    Qs = [1,2,3,6,8]
+    Qs = [1,3,6,8]
     gammas = [1/2., 1/4., 3/4.]
     epsilons = [.05, .1, .15]
     lrms = [.2, 1., 5.]
@@ -142,7 +140,7 @@ def run():
     # We're going to save trial results to a file to avoid having to search through terminal
     saveFile = open("results.txt", "a")
     import datetime
-    saveFile.write("--Running at {}--".format(str(datetime.datetime.now)))
+    saveFile.write("--Running at {}--".format(str(datetime.datetime.now())))
     
     from itertools import product
     for i,j,k,l in product(Qs, gammas, epsilons, lrms):
@@ -162,8 +160,8 @@ def run():
             for key, value in metrics.items():
                 perf[key].append(value)
         for key, item in valuesDict.items():
-            saveFile.write("{} | ".format(item))
-        saveFile.write("| {}, {} \n".format(sum(perf['steps'])/10., sum(perf['posRewardSteps'])/10.))
+            saveFile.write("{},".format(item))
+        saveFile.write("{},{}\n".format(sum(perf['steps'])/10., sum(perf['posRewardSteps'])/10.))
     saveFile.close()
     return        
        
