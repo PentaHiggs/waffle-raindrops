@@ -32,6 +32,7 @@ class LearningAgent(Agent):
         self.s_a = None
         self.oldReward = 0
         self.netReward = 0
+        self.stepsTaken = 0
         self.debug = False
         
     def reset(self, destination=None):
@@ -120,7 +121,8 @@ class LearningAgent(Agent):
         self.stepsTaken += 1
         
         if self.debug:
-            print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, random = {}, \waypoint =  {}".format(deadline, inputs, action, reward, isRandom, self.next_waypoint)
+            #print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, random = {}, \waypoint =  {}".format(deadline, inputs, action, reward, isRandom, self.next_waypoint)
+            pass
     
     def returnPerformanceMetrics(self):
         return {'steps': self.stepsTaken, 'posRewardSteps': self.positiveRewards} 
@@ -129,14 +131,39 @@ class LearningAgent(Agent):
 def run():
     """Run the agent for a finite number of trials."""
     # Set up environment and agent
+
+    Qs = [1,.75,1.25]#[1,3,6,8]
+    gammas = [1/2.,1/2.25,1/1.75]#[1/2., 1/4., 3/4.]
+    epsilons = [0.02,0.03,0.01]#[.05, .1, .15]
+    lrms =[0.2,0.1]#[.2, 1., 5.]
+    
+    # We're going to save trial results to a file to avoid having to search through terminal
+    saveFile = open("results2.csv", "a")
+    import datetime
+    saveFile.write("--Running at {}--\n".format(str(datetime.datetime.now())))
+    
+    from itertools import product 
+    for i,j,k,l in product(Qs, gammas, epsilons, lrms):
+        valuesDict = {"defaultQ":i, "discountFactor":j, "epsilon":k, "learningRateMultiplier":l}
         e = Environment()
-    a = e.create_agent(LearningAgent,epsilon=0.03,learningRateMultiplier=0.2,defaultQ=1.25,discountFactor=1/2.25)
-    e.set_primary_agent(a, enforce_deadline=True)
-    sim = Simulator(e, update_delay=0)
-    sim.run(n_trials=100)
-    a.debug=True
-    sim = Simulator(e, update_delay=1)
-    sim.run(n_trials=10)
+        a = e.create_agent(LearningAgent, **valuesDict)
+        e.set_primary_agent(a, enforce_deadline=True)
+        sim = Simulator(e, update_delay=0)
+        sim.run(n_trials=100)
+        a.debug = False
+        
+        # Record the results of 10 runs
+        perf = {'steps':[], 'posRewardSteps':[]}
+        for m in xrange(10):
+            sim = Simulator(e, update_delay=0)
+            sim.run(n_trials=1)
+            metrics = a.returnPerformanceMetrics()
+            for key, value in metrics.items():
+                perf[key].append(value)
+        for key, item in valuesDict.items():
+            saveFile.write("{},".format(item))
+        saveFile.write("{},{}\n".format(sum(perf['steps'])/10., sum(perf['posRewardSteps'])/10.))
+    saveFile.close()
     return        
 
 if __name__ == '__main__':
