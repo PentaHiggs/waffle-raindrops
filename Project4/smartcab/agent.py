@@ -32,7 +32,7 @@ class LearningAgent(Agent):
         self.s_a = None
         self.oldReward = 0
         self.netReward = 0
-        
+        self.stepsTaken = 0
         self.debug = False
         
     def reset(self, destination=None):
@@ -43,8 +43,9 @@ class LearningAgent(Agent):
         print "Self reward = {}".format(self.netReward)
         self.netReward = 0
         if self.debug == True:
-            print "Positive Rewards = {} out of {}".format(self.positiveRewards, self.totalRewards)
+            print "Positive Rewards = {} out of {}".format(self.positiveRewards, self.stepsTaken)
         self.positiveRewards = 0
+        self.stepsTaken = 0
         
     def update(self, t):
         actions = [None, 'forward', 'left', 'right']
@@ -111,40 +112,40 @@ class LearningAgent(Agent):
         if self.timesVisited.has_key(self.s_a):
             self.timesVisited[self.s_a] += 1
         else:
-            self.timesVisited[self.s_a] =1
+            self.timesVisited[self.s_a] = 1
             
         self.oldReward = reward
         self.netReward += reward
         
-        self.positiveRewards += 1 if (reward > 0) else 0
+        self.positiveRewards += (1 if (reward > 0) else 0)
+        self.stepsTaken += 1
         
         if self.debug:
             #print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, random = {}, \waypoint =  {}".format(deadline, inputs, action, reward, isRandom, self.next_waypoint)
             pass
     
     def returnPerformanceMetrics(self):
-        return {'steps': sum(self.timesVisited.values()), 'posRewardSteps': self.positiveRewards} 
+        return {'steps': self.stepsTaken, 'posRewardSteps': self.positiveRewards} 
 
     
 def run():
     """Run the agent for a finite number of trials."""
-
     # Set up environment and agent
-    e = Environment()
 
-    Qs = [1,3,6,8]
-    gammas = [1/2., 1/4., 3/4.]
-    epsilons = [.05, .1, .15]
-    lrms = [.2, 1., 5.]
+    Qs = [1,.75,1.25]#[1,3,6,8]
+    gammas = [1/2.,1/2.25,1/1.75]#[1/2., 1/4., 3/4.]
+    epsilons = [0.02,0.03,0.01]#[.05, .1, .15]
+    lrms =[0.2,0.1]#[.2, 1., 5.]
     
     # We're going to save trial results to a file to avoid having to search through terminal
-    saveFile = open("results.txt", "a")
+    saveFile = open("results2.csv", "a")
     import datetime
-    saveFile.write("--Running at {}--".format(str(datetime.datetime.now())))
+    saveFile.write("--Running at {}--\n".format(str(datetime.datetime.now())))
     
-    from itertools import product
+    from itertools import product 
     for i,j,k,l in product(Qs, gammas, epsilons, lrms):
         valuesDict = {"defaultQ":i, "discountFactor":j, "epsilon":k, "learningRateMultiplier":l}
+        e = Environment()
         a = e.create_agent(LearningAgent, **valuesDict)
         e.set_primary_agent(a, enforce_deadline=True)
         sim = Simulator(e, update_delay=0)
@@ -164,7 +165,6 @@ def run():
         saveFile.write("{},{}\n".format(sum(perf['steps'])/10., sum(perf['posRewardSteps'])/10.))
     saveFile.close()
     return        
-       
 
 if __name__ == '__main__':
     run()
